@@ -1,18 +1,18 @@
-int ledPin = 13;                // LED
-int pirPin = 3;                 // PIR Out pin
-int pirStat = 0;                   // PIR status
+const int sensorPin = 0;
+int lightCal;
+int lightVal;
+
 void setup() {
- pinMode(ledPin, OUTPUT);
- pinMode(pirPin, INPUT);
- Serial.begin(9600);
+  Serial.begin(115200);
+  lightCal = analogRead(sensorPin);
 }
-void loop(){
- pirStat = digitalRead(pirPin);
- if (pirStat == HIGH) {            // if motion detected
-   digitalWrite(ledPin, HIGH);  // turn LED ON
-   Serial.println("HIT");
- }
- else {
-   digitalWrite(ledPin, LOW); // turn LED OFF if we have no motion
- }
+
+void loop() {
+  lightVal = analogRead(sensorPin);
+  Serial.println(lightVal);
+
+  if(lightCal - 25 > lightVal){
+    Serial.println("****ALERT****");
+  }
+  delay(500);
 }
